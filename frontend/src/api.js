@@ -1,4 +1,4 @@
-const API = "http://localhost:3000";;
+const API = "https://gatepass-backend-22si.onrender.com";
 
 export const getUsers = () => fetch(`${API}/api/users`).then(r => r.json());
 export const getLogs = () => fetch(`${API}/api/logs`).then(r => r.json());
