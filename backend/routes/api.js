@@ -19,26 +19,82 @@ router.post("/login", (req, res) => {
   return res.status(401).json({ success: false, message: "Invalid credentials" });
 });
 
-
 // =========================
 // VERIFY CARD (ESP32)
 // =========================
-router.get("/verify", async (req, res) => {
+
+router.get("/verify", (req, res) => {
   const id = req.query.id;
 
+  if (!id) {
+    return res.status(400).send("DENY");
+  }
+
+  // Find user by scanned card ID
   const user = users.find((u) => u.cardID === id);
 
-  if (user && user.approved) {
-    const log = {
-      name: user.name,
-      type: user.type,
-      status: "ALLOW",
+  // CASE 1: Card not found → DENY
+  if (!user) {
+    const deniedLog = {
+      cardID: id,
+      name: "Unknown",
+      type: "Unknown",
+      status: "DENY",
+      reason: "Card ID not found",
       time: new Date()
     };
 
-    logs.push(log);
+    logs.push(deniedLog);
+    return res.send("DENY");
+  }
 
-    // Optional notifications
+  // CASE 2: Card found but not approved → DENY
+  if (!user.approved) {
+    const deniedLog = {
+      cardID: id,
+      name: user.name,
+      type: user.type,
+      status: "DENY",
+      reason: "User not approved",
+      time: new Date()
+    };
+
+    logs.push(deniedLog);
+    return res.send("DENY");
+  }
+
+  // CASE 3: Card found and approved → ALLOW
+  const allowLog = {
+    cardID: id,
+    name: user.name,
+    type: user.type,
+    status: "ALLOW",
+    reason: "Access granted",
+    time: new Date()
+  };
+
+  logs.push(allowLog);
+  return res.send("ALLOW");
+});
+
+
+
+// router.get("/verify", async (req, res) => {
+//   const id = req.query.id;
+
+//   const user = users.find((u) => u.cardID === id);
+
+//   if (user && user.approved) {
+//     const log = {
+//       name: user.name,
+//       type: user.type,
+//       status: "ALLOW",
+//       time: new Date()
+//     };
+
+//     logs.push(log);
+
+    ///// Optional notifications
     // await sendEmail(
     //   user.email,
     //   "Gate Access Granted",
@@ -48,21 +104,21 @@ router.get("/verify", async (req, res) => {
     // await sendSMS(
     //   user.phone,
     //   `${user.name} has entered the gate successfully.`
-    // );
+    ///// );
 
-     return res.send("ALLOW");
-  }
+  //    return res.send("ALLOW");
+  // }
 
-  const deniedLog = {
-    name: user ? user.name : "Unknown",
-    type: user ? user.type : "Unknown",
-    status: "DENY",
-    time: new Date()
-  };
+  // const deniedLog = {
+  //   name: user ? user.name : "Unknown",
+  //   type: user ? user.type : "Unknown",
+  //   status: "DENY",
+  //   time: new Date()
+  // };
 
-  logs.push(deniedLog);
+  // logs.push(deniedLog);
 
-//   if (user) {
+////   if (user) {
 //     await sendEmail(
 //       user.email,
 //       "Gate Access Denied",
@@ -73,10 +129,10 @@ router.get("/verify", async (req, res) => {
 //       user.phone,
 //       `${user.name} attempted gate access but is not approved.`
 //     );
-//   }
+////   }
 
-  return res.send("DENY");
-});
+//   return res.send("DENY");
+// });
 
 
 // =========================
