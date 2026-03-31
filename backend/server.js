@@ -37,6 +37,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Ensure uploads folder exists
@@ -70,7 +71,8 @@ app.post("/upload-image", upload.single("image"), (req, res) => {
       });
     }
 
-    const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
+    const baseUrl =
+      process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
 
     res.json({
       success: true,
