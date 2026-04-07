@@ -1,8 +1,12 @@
 
+
 // const API = "https://gatepass-backend-22si.onrender.com";
 
-// export const getUsers = () => fetch(`${API}/api/users`).then(r => r.json());
-// export const getLogs = () => fetch(`${API}/api/logs`).then(r => r.json());
+// export const getUsers = () =>
+//   fetch(`${API}/api/users`).then((r) => r.json());
+
+// export const getLogs = () =>
+//   fetch(`${API}/api/logs`).then((r) => r.json());
 
 // export const addUser = (data) =>
 //   fetch(`${API}/api/addUser`, {
@@ -16,6 +20,13 @@
 //     method: "POST",
 //     headers: { "Content-Type": "application/json" },
 //     body: JSON.stringify({ cardID }),
+//   });
+
+// export const loginAdmin = (data) =>
+//   fetch(`${API}/api/login`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
 //   });
 
 const API = "https://gatepass-backend-22si.onrender.com";
@@ -38,6 +49,18 @@ export const approveUser = (cardID) =>
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ cardID }),
+  });
+
+export const deleteUser = (cardID) =>
+  fetch(`${API}/api/deleteUser`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cardID }),
+  });
+
+export const clearLogs = () =>
+  fetch(`${API}/api/clearLogs`, {
+    method: "POST",
   });
 
 export const loginAdmin = (data) =>
