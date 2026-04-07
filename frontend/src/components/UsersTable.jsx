@@ -3,32 +3,37 @@
 //     <div className="card">
 //       <h3>Users</h3>
 
-//       {users.map((u, i) => (
-//         <div key={i} style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          
-//           <img
-//             src={u.photo || "https://via.placeholder.com/80"}
-//             width="60"
-//             height="60"
-//             style={{ borderRadius: "10px" }}
-//           />
+//       {users.length === 0 ? (
+//         <p>No users found</p>
+//       ) : (
+//         users.map((u, i) => (
+//           <div
+//             key={i}
+//             style={{
+//               display: "flex",
+//               gap: "10px",
+//               alignItems: "center",
+//               marginBottom: "10px"
+//             }}
+//           >
+//             <div>
+//               {u.name} - {u.cardID} - {u.type} -{" "}
+//               {u.approved ? "Approved" : "Pending"}
+//             </div>
 
-//           <div>
-//             {u.name} - {u.cardID} - {u.type} - {u.approved ? "Approved" : "Pending"}
+//             {!u.approved && (
+//               <button onClick={() => onApprove(u.cardID)}>Approve</button>
+//             )}
 //           </div>
-
-//           {!u.approved && (
-//             <button onClick={() => onApprove(u.cardID)}>Approve</button>
-//           )}
-//         </div>
-//       ))}
+//         ))
+//       )}
 //     </div>
 //   );
 // }
 
 // export default UsersTable;
 
-function UsersTable({ users, onApprove }) {
+function UsersTable({ users, onApprove, onDelete }) {
   return (
     <div className="card">
       <h3>Users</h3>
@@ -41,19 +46,31 @@ function UsersTable({ users, onApprove }) {
             key={i}
             style={{
               display: "flex",
-              gap: "10px",
+              justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "10px"
+              marginBottom: "10px",
+              padding: "10px",
+              borderBottom: "1px solid #444",
+              color: "white"
             }}
           >
             <div>
-              {u.name} - {u.cardID} - {u.type} -{" "}
+              <b>{u.name}</b> - {u.cardID} - {u.type} -{" "}
               {u.approved ? "Approved" : "Pending"}
             </div>
 
-            {!u.approved && (
-              <button onClick={() => onApprove(u.cardID)}>Approve</button>
-            )}
+            <div style={{ display: "flex", gap: "10px" }}>
+              {!u.approved && (
+                <button onClick={() => onApprove(u.cardID)}>Approve</button>
+              )}
+
+              <button
+                onClick={() => onDelete(u.cardID)}
+                style={{ backgroundColor: "crimson" }}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))
       )}
