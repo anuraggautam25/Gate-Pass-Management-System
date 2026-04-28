@@ -83,9 +83,24 @@ function Dashboard() {
     setLogs([...data].reverse());
   };
 
+  // useEffect(() => {
+  //   fetchLogs();
+  // }, [search, type]);
+
   useEffect(() => {
+  // initial fetch
+  fetchLogs();
+
+  // auto refresh every 2 seconds
+  const interval = setInterval(() => {
     fetchLogs();
+  }, 2000);
+
+  // cleanup (important to avoid memory leak)
+  return () => clearInterval(interval);
+
   }, [search, type]);
+  
 
   const exportCSV = () => {
     let csv = "Name,CardID,Type,Status,Time\n";
