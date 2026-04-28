@@ -13,7 +13,6 @@
 
 import { useState } from "react";
 import { loginAdmin } from "../api";
-import gailLogo from "../assets/gail.png";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -27,7 +26,7 @@ function Login({ onLogin }) {
 
   return (
     <div className="container" style={{ textAlign: "center" }}>
-      <img src={gailLogo} style={{ width: "140px", marginTop: "30px" }} />
+      <img src="/gail.png" style={{ width: "140px", marginTop: "30px" }} />
 
       <h2 style={{ color: "#f5d94e" }}>
         GAIL Gate Pass System
