@@ -416,4 +416,15 @@ router.get("/logs", (req, res) => {
   res.json(logs);
 });
 
+router.delete("/log/:index", (req, res) => {
+  const index = parseInt(req.params.index);
+
+  if (isNaN(index) || index < 0 || index >= logs.length) {
+    return res.status(400).json({ message: "Invalid index" });
+  }
+
+  logs.splice(index, 1);
+
+  res.json({ message: "Log deleted" });
+});
 module.exports = router;
