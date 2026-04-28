@@ -1,3 +1,5 @@
+
+
 // import { useEffect, useState } from "react";
 // import { getLogsFiltered, deleteLog } from "../api";
 // import LogsTable from "../components/LogsTable";
@@ -12,28 +14,33 @@
 //     setLogs([...data].reverse());
 //   };
 
+//   // useEffect(() => {
+//   //   fetchLogs();
+//   // }, [search, type]);
+
 //   useEffect(() => {
+//   // initial fetch
+//   fetchLogs();
+
+//   // auto refresh every 2 seconds
+//   const interval = setInterval(() => {
 //     fetchLogs();
+//   }, 2000);
+
+//   // cleanup (important to avoid memory leak)
+//   return () => clearInterval(interval);
+
 //   }, [search, type]);
-
-//   const handleDelete = async (index) => {
-//     const confirmDelete = window.confirm("Delete this log?");
-//     if (!confirmDelete) return;
-
-//     await deleteLog(index);
-//     fetchLogs();
-//   };
+  
 
 //   const exportCSV = () => {
-//     let csv = "Name,CardID,Type,Status,Reason,Time\n";
-
+//     let csv = "Name,CardID,Type,Status,Time\n";
 //     logs.forEach((l) => {
-//       csv += `${l.name},${l.cardID},${l.type},${l.status},${l.reason},${l.time}\n`;
+//       csv += `${l.name},${l.cardID},${l.type},${l.status},${l.time}\n`;
 //     });
 
-//     const blob = new Blob([csv], { type: "text/csv" });
-//     const url = window.URL.createObjectURL(blob);
-
+//     const blob = new Blob([csv]);
+//     const url = URL.createObjectURL(blob);
 //     const a = document.createElement("a");
 //     a.href = url;
 //     a.download = "logs.csv";
@@ -42,27 +49,29 @@
 
 //   return (
 //     <div className="container">
-//       <h2 style={{ color: "white" }}>Dashboard</h2>
 
-//       {/* 🔍 SEARCH */}
-//       <input
-//         placeholder="Search by name or card ID"
-//         value={search}
-//         onChange={(e) => setSearch(e.target.value)}
-//       />
+//       <div className="card">
+//         <div className="header">Dashboard Controls</div>
 
-//       {/* 🎯 FILTER */}
-//       <select value={type} onChange={(e) => setType(e.target.value)}>
-//         <option>All</option>
-//         <option>Employee</option>
-//         <option>Visitor</option>
-//         <option>Contractor</option>
-//       </select>
+//         <div className="row">
+//           <input
+//             placeholder="Search name / card"
+//             value={search}
+//             onChange={(e) => setSearch(e.target.value)}
+//           />
 
-//       {/* 📥 EXPORT */}
-//       <button onClick={exportCSV}>Export CSV</button>
+//           <select value={type} onChange={(e) => setType(e.target.value)}>
+//             <option>All</option>
+//             <option>Employee</option>
+//             <option>Visitor</option>
+//             <option>Contractor</option>
+//           </select>
 
-//       <LogsTable logs={logs} onDelete={handleDelete} />
+//           <button onClick={exportCSV}>Export CSV</button>
+//         </div>
+//       </div>
+
+//       <LogsTable logs={logs} onDelete={deleteLog} />
 //     </div>
 //   );
 // }
@@ -83,24 +92,15 @@ function Dashboard() {
     setLogs([...data].reverse());
   };
 
-  // useEffect(() => {
-  //   fetchLogs();
-  // }, [search, type]);
-
   useEffect(() => {
-  // initial fetch
-  fetchLogs();
-
-  // auto refresh every 2 seconds
-  const interval = setInterval(() => {
     fetchLogs();
-  }, 2000);
 
-  // cleanup (important to avoid memory leak)
-  return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      fetchLogs();
+    }, 2000);
 
+    return () => clearInterval(interval);
   }, [search, type]);
-  
 
   const exportCSV = () => {
     let csv = "Name,CardID,Type,Status,Time\n";
@@ -119,28 +119,44 @@ function Dashboard() {
   return (
     <div className="container">
 
-      <div className="card">
-        <div className="header">Dashboard Controls</div>
+      {/* 🔥 CENTERED MAIN TITLE */}
+      <h1
+        style={{
+          textAlign: "center",
+          color: "#f5d94e",
+          marginBottom: "20px"
+        }}
+      >
+        GAIL Gate Pass System
+      </h1>
 
-        <div className="row">
-          <input
-            placeholder="Search name / card"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+      {/* 🔥 WRAPPER FOR CENTERED CONTENT */}
+      <div style={{ maxWidth: "1200px", margin: "auto" }}>
 
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option>All</option>
-            <option>Employee</option>
-            <option>Visitor</option>
-            <option>Contractor</option>
-          </select>
+        <div className="card">
+          <div className="header">Dashboard Controls</div>
 
-          <button onClick={exportCSV}>Export CSV</button>
+          <div className="row">
+            <input
+              placeholder="Search name / card"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <select value={type} onChange={(e) => setType(e.target.value)}>
+              <option>All</option>
+              <option>Employee</option>
+              <option>Visitor</option>
+              <option>Contractor</option>
+            </select>
+
+            <button onClick={exportCSV}>Export CSV</button>
+          </div>
         </div>
-      </div>
 
-      <LogsTable logs={logs} onDelete={deleteLog} />
+        <LogsTable logs={logs} onDelete={deleteLog} />
+
+      </div>
     </div>
   );
 }
