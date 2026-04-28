@@ -18,12 +18,23 @@ function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+const handleLogin = async () => {
+  try {
     const res = await loginAdmin({ username, password });
-    if (res.ok) onLogin();
-    else alert("Invalid credentials");
-  };
+    const data = await res.json();
 
+    console.log("Login response:", data); // debug
+
+    if (data.success) {
+      onLogin(); // ✅ now correct
+    } else {
+      alert("Invalid credentials");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Server error or not reachable");
+  }
+};
   return (
     <div className="container" style={{ textAlign: "center" }}>
       <img src="/gail.png" style={{ width: "140px", marginTop: "30px" }} />
