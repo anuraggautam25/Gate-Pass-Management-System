@@ -1,15 +1,6 @@
-// function Navbar() {
-//   return (
-//     <div className="navbar">
-//       <h2>Gate Pass System</h2>
-//     </div>
-//   );
-// }
-
-// export default Navbar;
 import gailLogo from "../assets/gail.png";
 
-function Navbar() {
+function Navbar({ setPage, setLogin, page }) {
   return (
     <div className="navbar">
       <div className="nav-left">
@@ -17,8 +8,33 @@ function Navbar() {
         <div className="nav-title">GAIL Gate Pass System</div>
       </div>
 
-      <div>
-        {/* optional right side */}
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button
+          onClick={() => setPage("dashboard")}
+          style={{
+            background: page === "dashboard" ? "#2ecc71" : "#444",
+            color: "white"
+          }}
+        >
+          Dashboard
+        </button>
+
+        <button
+          onClick={() => setPage("admin")}
+          style={{
+            background: page === "admin" ? "#2ecc71" : "#444",
+            color: "white"
+          }}
+        >
+          Admin
+        </button>
+
+        <button
+          onClick={() => setLogin(false)}
+          style={{ backgroundColor: "crimson", color: "white" }}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
