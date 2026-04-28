@@ -21,6 +21,8 @@
 
 // export default App;
 
+
+
 import { useState } from "react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -29,16 +31,17 @@ import Navbar from "./components/Navbar";
 
 function App() {
   const [login, setLogin] = useState(false);
-  const [page, setPage] = useState("dashboard"); // simple navigation
+  const [page, setPage] = useState("dashboard");
 
-  // Login screen
+  // If not logged in → show login page
   if (!login) return <Login setLogin={setLogin} />;
 
   return (
     <>
-      <Navbar setPage={setPage} />
+      {/* ✅ HERE is where you put it */}
+      <Navbar setPage={setPage} setLogin={setLogin} page={page} />
 
-      {/* PAGE SWITCHING */}
+      {/* Page rendering */}
       {page === "dashboard" && <Dashboard />}
       {page === "admin" && <Admin />}
     </>
