@@ -56,7 +56,7 @@ function UsersTable({ users, onApprove, onDelete }) {
       ) : (
         users.map((u, i) => (
           <div
-            key={i}
+            key={u.cardID}
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -70,7 +70,7 @@ function UsersTable({ users, onApprove, onDelete }) {
             {/* ✅ COMBINED USER INFO */}
             <div>
               <b>{u.name}</b> - {u.cardID} - {u.type} <br />
-              ID: {u.idProof} ({u.idNumber}) <br />
+              ID: {u.idProof} (****{u.idNumber?.slice(-4)}) <br />
               Status: {u.approved ? "Approved" : "Pending"}
             </div>
 
