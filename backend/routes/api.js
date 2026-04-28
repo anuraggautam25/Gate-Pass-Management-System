@@ -220,23 +220,45 @@ router.get("/users", (req, res) => {
 // =========================
 // GET LOGS
 // =========================
+// router.get("/logs", (req, res) => {
+//   const { search, type } = req.query;
+
+//   let filteredLogs = [...logs];
+
+//   // 🔍 SEARCH (name or cardID)
+//   if (search) {
+//     const s = search.toLowerCase();
+//     filteredLogs = filteredLogs.filter(
+//       (l) =>
+//         l.name.toLowerCase().includes(s) ||
+//         l.cardID.toLowerCase().includes(s)
+//     );
+//   }
+
+//   // 🎯 FILTER (Employee / Visitor / Contractor)
+//   if (type && type !== "All") {
+//     filteredLogs = filteredLogs.filter((l) => l.type === type);
+//   }
+
+//   res.json(filteredLogs);
+// });
 router.get("/logs", (req, res) => {
-  const { search, type } = req.query;
+  const search = req.query.search || "";
+  const type = req.query.type || "All";
 
   let filteredLogs = [...logs];
 
-  // 🔍 SEARCH (name or cardID)
-  if (search) {
+  // SEARCH
+  if (search.trim() !== "") {
     const s = search.toLowerCase();
-    filteredLogs = filteredLogs.filter(
-      (l) =>
-        l.name.toLowerCase().includes(s) ||
-        l.cardID.toLowerCase().includes(s)
+    filteredLogs = filteredLogs.filter((l) =>
+      (l.name || "").toLowerCase().includes(s) ||
+      (l.cardID || "").toLowerCase().includes(s)
     );
   }
 
-  // 🎯 FILTER (Employee / Visitor / Contractor)
-  if (type && type !== "All") {
+  // FILTER TYPE
+  if (type !== "All") {
     filteredLogs = filteredLogs.filter((l) => l.type === type);
   }
 
