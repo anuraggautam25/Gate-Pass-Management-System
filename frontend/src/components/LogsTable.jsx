@@ -1,7 +1,7 @@
-// function LogsTable({ logs }) {
+// function LogsTable({ logs, onDelete }) {
 //   return (
 //     <div className="card">
-//       <h3>RFID Access Logs</h3>
+//       <h3>RFID Logs</h3>
 
 //       {logs.length === 0 ? (
 //         <p>No logs found</p>
@@ -12,31 +12,33 @@
 //             style={{
 //               display: "flex",
 //               gap: "15px",
-//               alignItems: "center",
 //               marginBottom: "15px",
+//               borderBottom: "1px solid #444",
 //               padding: "10px",
-//               borderBottom: "1px solid #444"
+//               color: "white"
 //             }}
 //           >
 //             <img
-//               src={l.photo || "https://via.placeholder.com/80?text=No+Photo"}
-//               alt={l.name}
+//               src={l.photo || "https://via.placeholder.com/80"}
 //               width="80"
 //               height="80"
-//               style={{
-//                 borderRadius: "10px",
-//                 objectFit: "cover"
-//               }}
+//               style={{ borderRadius: "10px" }}
 //             />
 
-//             <div style={{ textAlign: "left" }}>
+//             <div>
 //               <div><b>Name:</b> {l.name}</div>
-//               <div><b>Card ID:</b> {l.cardID}</div>
+//               <div><b>Card:</b> {l.cardID}</div>
 //               <div><b>Type:</b> {l.type}</div>
-//               <div><b>ID:</b> {l.idProof} ({l.idNumber})</div>
 //               <div><b>Status:</b> {l.status}</div>
 //               <div><b>Reason:</b> {l.reason}</div>
 //               <div><b>Time:</b> {new Date(l.time).toLocaleString()}</div>
+
+//               <button
+//                 onClick={() => onDelete(i)}
+//                 style={{ marginTop: "5px", background: "red" }}
+//               >
+//                 Delete
+//               </button>
 //             </div>
 //           </div>
 //         ))
@@ -50,7 +52,7 @@
 function LogsTable({ logs, onDelete }) {
   return (
     <div className="card">
-      <h3>RFID Logs</h3>
+      <div className="header">Access Logs</div>
 
       {logs.length === 0 ? (
         <p>No logs found</p>
@@ -62,9 +64,8 @@ function LogsTable({ logs, onDelete }) {
               display: "flex",
               gap: "15px",
               marginBottom: "15px",
-              borderBottom: "1px solid #444",
               padding: "10px",
-              color: "white"
+              borderBottom: "1px solid #334155"
             }}
           >
             <img
@@ -74,21 +75,20 @@ function LogsTable({ logs, onDelete }) {
               style={{ borderRadius: "10px" }}
             />
 
-            <div>
-              <div><b>Name:</b> {l.name}</div>
-              <div><b>Card:</b> {l.cardID}</div>
-              <div><b>Type:</b> {l.type}</div>
-              <div><b>Status:</b> {l.status}</div>
-              <div><b>Reason:</b> {l.reason}</div>
-              <div><b>Time:</b> {new Date(l.time).toLocaleString()}</div>
-
-              <button
-                onClick={() => onDelete(i)}
-                style={{ marginTop: "5px", background: "red" }}
-              >
-                Delete
-              </button>
+            <div style={{ flex: 1 }}>
+              <div><b>{l.name}</b></div>
+              <div>ID: {l.cardID}</div>
+              <div>Type: {l.type}</div>
+              <div>Status: {l.status}</div>
+              <div>{new Date(l.time).toLocaleString()}</div>
             </div>
+
+            <button
+              className="danger"
+              onClick={() => onDelete(i)}
+            >
+              Delete
+            </button>
           </div>
         ))
       )}
