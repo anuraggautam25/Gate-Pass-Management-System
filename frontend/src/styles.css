@@ -1,109 +1,116 @@
-/* body {
-  background: #0f172a;
-  color: white;
-  font-family: Arial;
-  text-align: center;
+/* ===== GAIL THEME ===== */
+:root {
+  --gail-yellow: #f5d94e;
+  --gail-black: #0b0f1a;
+  --gail-dark: #121826;
+  --gail-accent: #ff3b1f;
+  --text: #e5e7eb;
 }
 
-.container {
-  padding: 20px;
-}
-
-.card {
-  background: #1e293b;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 10px;
-}
-
-.navbar {
-  background: #111827;
-  padding: 15px;
-}
-
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
-
+/* Base */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background: #0f172a;
-  color: white;
+  background: linear-gradient(180deg, #0b0f1a, #121826);
+  color: var(--text);
 }
 
-/* layout */
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--gail-black);
+  border-bottom: 3px solid var(--gail-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo {
+  height: 42px;
+}
+
+.nav-title {
+  color: var(--gail-yellow);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Container */
 .container {
   padding: 20px;
 }
 
-/* card */
+/* Cards */
 .card {
-  background: #1e293b;
-  padding: 20px;
+  background: var(--gail-dark);
   border-radius: 12px;
+  padding: 18px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 1px solid rgba(245, 217, 78, 0.2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.4);
 }
 
-/* inputs */
+/* Headers */
+.header {
+  text-align: center;
+  color: var(--gail-yellow);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* Inputs */
 input, select {
+  width: 100%;
   padding: 10px;
   margin: 8px 0;
   border-radius: 6px;
   border: none;
-  width: 100%;
+  background: #0b0f1a;
+  color: white;
 }
 
-/* buttons */
+/* Buttons */
 button {
-  padding: 10px 15px;
-  border: none;
+  padding: 10px 14px;
   border-radius: 6px;
+  border: none;
   cursor: pointer;
-  background: #3b82f6;
-  color: white;
   font-weight: 600;
+  background: var(--gail-yellow);
+  color: black;
 }
 
 button:hover {
   opacity: 0.9;
 }
 
-/* danger button */
 button.danger {
-  background: crimson;
+  background: var(--gail-accent);
+  color: white;
 }
 
-/* success */
-button.success {
-  background: green;
+button.secondary {
+  background: #1f2937;
+  color: white;
 }
 
-/* header */
-.header {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-/* flex layout */
+/* Layout helpers */
 .row {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .col {
   flex: 1;
-  min-width: 300px;
+  min-width: 280px;
 }
