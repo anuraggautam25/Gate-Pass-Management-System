@@ -1,10 +1,8 @@
-import gailLogo from "../assets/gail.png";
-
 function Navbar({ setPage, setLogin, page }) {
   return (
     <div className="navbar">
       <div className="nav-left">
-        <img src={gailLogo} alt="GAIL" className="nav-logo" />
+        <img src="/gail.png" alt="GAIL" className="nav-logo" />
         <div className="nav-title">GAIL Gate Pass System</div>
       </div>
 
