@@ -34,7 +34,7 @@ function App() {
   const [page, setPage] = useState("dashboard");
 
   // If not logged in → show login page
-  if (!login) return <Login setLogin={setLogin} />;
+  if (!login) return <Login onLogin={() => setLogin(true)} />;
 
   return (
     <>
